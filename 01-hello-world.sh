@@ -4,7 +4,10 @@ echo "helloworld"
 Person1=Ramesh
 Person2=Suresh
 
-echo "Ramesh: Hi Suresh,Good Morning"
-echo "Suresh:  Good Morning,Ramesh"
+# echo "Ramesh: Hi Suresh,Good Morning"
+# echo "Suresh:  Good Morning,Ramesh"
 
 
+
+ echo "$PERSON1: Hi $PERSON2,Good Morning"
+echo "$PERSON2:  Good Morning,$PERSON1"
