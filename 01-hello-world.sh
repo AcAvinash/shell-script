@@ -1,13 +1,10 @@
-####Sha-bang:- It is used to specify which shell is used to process our scripts.
 #!/bin/bash
-echo "helloworld"
-PERSON1=Ramesh
-PERSON2=Suresh
 
-# echo "Ramesh: Hi Suresh,Good Morning"
-# echo "Suresh:  Good Morning,Ramesh"
+echo "Hello World, I am learning DevOps with AWS"
+PERSON1=Sachin
+PERSON2=Rohit
 
-
-
- echo "$PERSON1:  Hi $PERSON2,Good Morning"
- echo "$PERSON2:  Good Morning,$PERSON1"
+echo "$PERSON1: Hi $PERSON2, Good Morning"
+echo "$PERSON2: Good Morning $PERSON1"
+echo "$PERSON1: How are you $PERSON2"
+echo "$PERSON2: i am good, how are you $PERSON1"
