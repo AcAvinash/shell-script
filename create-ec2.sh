@@ -15,6 +15,6 @@ for i in "${NAMES[@]}"; do
     INSTANCE_TYPE=t2.micro
   fi
   echo "creating $i instance"
- IP_ADDRESS=(aws ec2 run-instances --image-id $IMAGE_ID --count 1 --instance-type $INSTANCE_TYPE --tag-specification "ResourceType=instance,Tags=[{key=Name,Value=$i}]" --security-group-ids $SECURITY_GROUP_ID | jq -r '.Instances[0].PrivateIpAddress')
+IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID --count 1 --instance-type $INSTANCE_TYPE --tag-specification "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" --security-group-ids $SECURITY_GROUP_ID | jq -r '.Instances[0].PrivateIpAddress')
  echo " created $i instances: $IP_ADDRESS"
 done
