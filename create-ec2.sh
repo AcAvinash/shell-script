@@ -33,6 +33,24 @@ for i in "${NAMES[@]}"; do
   else
     echo "AWS CLI is not found in the PATH"
   fi
+
+{
+  "Comment": "optional comment about the changes in this change batch request",
+  "Changes": [
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "$i.$DOMAIN_NAME",
+        "Type": "A",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "$IP_ADDRESS"
+          },
+        ]
+      }
+    },
+  ]
+}
+
 done
-
-
