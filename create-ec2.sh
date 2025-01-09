@@ -24,11 +24,15 @@ for i in "${NAMES[@]}"; do
   # Display instance creation details
   echo "creating $i instance type: $INSTANCE_TYPE"
 
-  # Run AWS EC2 instance creation
+  # Run AWS EC2 instance creation and store the Private IP address
   if command -v aws &> /dev/null; then
-    aws ec2 run-instances --image-id $IMAGE_ID --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP_ID
+    IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP_ID --tag-specification "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" | jq -r '.Instances[0].PrivateIpAddress')
+    
+    # Display the created instance's IP address
+    echo "Created $i instance. Private IP address: $IP_ADDRESS"
   else
     echo "AWS CLI is not found in the PATH"
   fi
 done
+
 
