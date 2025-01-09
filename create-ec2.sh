@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Disable pager for AWS CLI to avoid interactive prompts
+export AWS_PAGER=""
+
 # Define instance names and parameters
 NAMES=("mongodb" "cart")
 DOMAIN_NAME="joindevops.fun"
@@ -28,3 +31,4 @@ for i in "${NAMES[@]}"; do
     echo "AWS CLI is not found in the PATH"
   fi
 done
+
