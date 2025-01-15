@@ -36,29 +36,25 @@ for i in $@; do
   fi
 # route53 ka hosted zone dena hai
     # Add DNS record to Route53
-    aws route53 change-resource-record-sets --hosted-zone-id $HOSTED_ZONE_ID --change-batch "$(cat <<EOF
-{
-  "Comment": "Add $i to Route53",
+aws route53 change-resource-record-sets --hosted-zone-id "$HOSTED_ZONE_ID" --change-batch '{
+  "Comment": "Add record to Route53",
   "Changes": [
     {
       "Action": "CREATE",
       "ResourceRecordSet": {
-        "Name": "$i.$DOMAIN_NAME",
+        "Name": "'"$i.$DOMAIN_NAME"'",
         "Type": "A",
         "TTL": 300,
         "ResourceRecords": [
           {
-            "Value": "$IP_ADDRESS"
+            "Value": "'"$IP_ADDRESS"'"
           }
         ]
       }
     }
   ]
-}
-EOF
-)"
-    echo "DNS record for $i.$DOMAIN_NAME created successfully."
-  else
-    echo "AWS CLI is not found in the PATH"
-  fi
+}'
+
+
+
 done
