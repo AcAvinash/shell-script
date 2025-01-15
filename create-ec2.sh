@@ -4,16 +4,17 @@
 export AWS_PAGER=""
 
 # Define instance names and parameters
-NAMES=("mongodb" "cart")
-DOMAIN_NAME="joindevops.fun"
+NAMES=$@
+DOMAIN_NAME=joindevops.fun
 INSTANCE_TYPE=""
 IMAGE_ID="ami-09c813fb71547fc4f"
-SECURITY_GROUP_ID="sg-0c82fa48dbc70749d"
+SECURITY_GROUP_ID=sg-0c82fa48dbc70749d
+HOSTED_ZONE_ID=Z0798189H8VMAOYWAMIV
 
 # Ensure AWS CLI is available by checking the PATH
 export PATH=$PATH:/usr/local/bin  # Adjust if necessary
 
-for i in "${NAMES[@]}"; do
+for i in $@; do
   # Set instance type based on name
   if [[ $i == "mongodb" || $i == "mysql" ]]; then
     INSTANCE_TYPE="t3.micro"
@@ -33,9 +34,11 @@ for i in "${NAMES[@]}"; do
   else
     echo "AWS CLI is not found in the PATH"
   fi
-
+# route53 ka hosted zone dena hai
+    # Add DNS record to Route53
+    aws route53 change-resource-record-sets --hosted-zone-id $HOSTED_ZONE_ID --change-batch "$(cat <<EOF
 {
-  "Comment": "optional comment about the changes in this change batch request",
+  "Comment": "Add $i to Route53",
   "Changes": [
     {
       "Action": "CREATE",
@@ -46,11 +49,16 @@ for i in "${NAMES[@]}"; do
         "ResourceRecords": [
           {
             "Value": "$IP_ADDRESS"
-          },
+          }
         ]
       }
-    },
+    }
   ]
 }
-
+EOF
+)"
+    echo "DNS record for $i.$DOMAIN_NAME created successfully."
+  else
+    echo "AWS CLI is not found in the PATH"
+  fi
 done
