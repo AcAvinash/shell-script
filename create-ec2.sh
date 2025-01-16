@@ -55,7 +55,7 @@
 
 #!/bin/bash
 
-NAMES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "web")
+NAMES=$@
 INSTANCE_TYPE=""
 IMAGE_ID=ami-09c813fb71547fc4f
 SECURITY_GROUP_ID=ssg-0c82fa48dbc70749d
