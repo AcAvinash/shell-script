@@ -29,25 +29,27 @@ for i in $@; do
     echo "Created $i instance. Private IP address: $IP_ADDRESS"
 
     echo "Adding Route 53 record for $i.$DOMAIN_NAME with IP $IP_ADDRESS"
-  #   aws route53 change-resource-record-sets --hosted-zone-id "$HOSTED_ZONE_ID" --change-batch "{
-  #     \"Comment\": \"Add record to Route53\",
-  #     \"Changes\": [
-  #       {
-  #         \"Action\": \"CREATE\",
-  #         \"ResourceRecordSet\": {
-  #           \"Name\": \"$i.$DOMAIN_NAME\",
-  #           \"Type\": \"A\",
-  #           \"TTL\": 300,
-  #           \"ResourceRecords\": [
-  #             {
-  #               \"Value\": \"$IP_ADDRESS\"
-  #             }
-  #           ]
-  #         }
-  #       }
-  #     ]
-  #   }"
-  # else
-  #   echo "AWS CLI is not found in the PATH"
-  # fi
+    # Uncomment this section when ready to test Route 53 record creation
+    # aws route53 change-resource-record-sets --hosted-zone-id "$HOSTED_ZONE_ID" --change-batch "{
+    #   \"Comment\": \"Add record to Route53\",
+    #   \"Changes\": [
+    #     {
+    #       \"Action\": \"CREATE\",
+    #       \"ResourceRecordSet\": {
+    #         \"Name\": \"$i.$DOMAIN_NAME\",
+    #         \"Type\": \"A\",
+    #         \"TTL\": 300,
+    #         \"ResourceRecords\": [
+    #           {
+    #             \"Value\": \"$IP_ADDRESS\"
+    #           }
+    #         ]
+    #       }
+    #     }
+    #   ]
+    # }"
+  else
+    echo "AWS CLI is not found in the PATH"
+  fi
 done
+
