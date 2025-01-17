@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Disable pager for AWS CLI to avoid interactive prompts
-export AWS_PAGER=""
 
 # Define instance names and parameters
 NAMES=$@
@@ -11,8 +9,7 @@ IMAGE_ID=ami-09c813fb71547fc4f
 SECURITY_GROUP_ID=sg-0c82fa48dbc70749d
 HOSTED_ZONE_ID=Z0798189H8VMAOYWAMIV
 
-# Ensure AWS CLI is available by checking the PATH
-export PATH=$PATH:/usr/local/bin  # Adjust if necessary
+
 
 for i in $@; do
   # Set instance type based on name
@@ -29,14 +26,7 @@ for i in $@; do
 
     IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID  --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" | jq -r '.Instances[0].PrivateIpAddress')
     echo "created $i instance: $IP_ADDRESS"
-  # if command -v aws &> /dev/null; then
-  #   IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP_ID --tag-specification "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" | jq -r '.Instances[0].PrivateIpAddress')
-    
-  #   # Display the created instance's IP address
-  #   echo "Created $i instance. Private IP address: $IP_ADDRESS"
-  # else
-  #   echo "AWS CLI is not found in the PATH"
-  # fi
+
 
   # route53 ka hosted zone dena hai
     # Add DNS record to Route53
