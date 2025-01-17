@@ -26,14 +26,17 @@ for i in $@; do
   echo "creating $i instance type: $INSTANCE_TYPE"
 
   # Run AWS EC2 instance creation and store the Private IP address
-  if command -v aws &> /dev/null; then
-    IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP_ID --tag-specification "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" | jq -r '.Instances[0].PrivateIpAddress')
+
+    IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID  --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" | jq -r '.Instances[0].PrivateIpAddress')
+    echo "created $i instance: $IP_ADDRESS"
+  # if command -v aws &> /dev/null; then
+  #   IP_ADDRESS=$(aws ec2 run-instances --image-id $IMAGE_ID --instance-type $INSTANCE_TYPE --security-group-ids $SECURITY_GROUP_ID --tag-specification "ResourceType=instance,Tags=[{Key=Name,Value=$i}]" | jq -r '.Instances[0].PrivateIpAddress')
     
-    # Display the created instance's IP address
-    echo "Created $i instance. Private IP address: $IP_ADDRESS"
-  else
-    echo "AWS CLI is not found in the PATH"
-  fi
+  #   # Display the created instance's IP address
+  #   echo "Created $i instance. Private IP address: $IP_ADDRESS"
+  # else
+  #   echo "AWS CLI is not found in the PATH"
+  # fi
 
   # route53 ka hosted zone dena hai
     # Add DNS record to Route53
