@@ -49,3 +49,4 @@ aws route53 change-resource-record-sets --hosted-zone-id "$HOSTED_ZONE_ID" --cha
   ]
 }'
 done
+#to run this script u need to create an iam user and attach that role to this instance
